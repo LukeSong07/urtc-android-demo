@@ -80,7 +80,7 @@ URTCAndroid 是UCloud推出的一款适用于android平台的实时音视频 SDK
 # 5 快速使用
 ## 5.1 初始化
 ### 5.1.1 引擎环境初始化
-主要配置android context  sdkmode以及AppID ，测试用的SEC_KEY,日志等级
+主要配置android context  sdkmode 日志等级以及AppID ，测试用的APP_KEY,可由Android客户端自行生成Token
 ~~~
 public class UCloudRtcApplication extends Application {
     @Override
@@ -89,7 +89,7 @@ public class UCloudRtcApplication extends Application {
         UCloudRtcSdkEnv.initEnv(getApplicationContext(), this);
         UCloudRtcSdkEnv.setLogLevel(UCloudRtcSdkLogLevel.UCloudRtc_SDK_LogLevelInfo) ;
         UCloudRtcSdkEnv.setSdkMode(UCloudRtcSdkMode.RTC_SDK_MODE_TRIVAL);
-        UCloudRtcSdkEnv.setTokenSeckey(CommonUtils.SEC_KEY);
+        UCloudRtcSdkEnv.setTokenSeckey(CommonUtils.APP_KEY);
         WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(outMetrics);
@@ -98,6 +98,9 @@ public class UCloudRtcApplication extends Application {
     }
 }
 ~~~
+Note：在正式环境中，setSdkMode的参数需改为UCloudRtcSdkMode.UCLOUD_RTC_SDK_MODE_NORMAL，并且在后台服务器中部署Token服务，客户端加入房间之前，向后台服务器申请Token ，以保证Token 的安全性。服务器部署Token具体步骤参考地址：https://docs.ucloud.cn/urtc/sdk/token
+
+
 ### 5.1.2 继承实现UCloudRtcSdkEventListener 实现事件处理
 ~~~
 UCloudRtcSdkEventListener eventListener = new UCloudRtcSdkEventListener() {
